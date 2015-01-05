@@ -5,7 +5,7 @@ Bitshares/oscommerce-plugin
 
 1. Copy these files into your osCommerce root directory
 2. Copy Bitshares Checkout(https://github.com/sidhujag/bitsharescheckout) files into your osCommerce root directory, overwrite any existing files.
-3. 
+
 # Configuration
 
 1. In your osCommerce admin panel under Modules > Payment, install the Bitshares module

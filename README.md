@@ -15,8 +15,8 @@ Bitshares/oscommerce-plugin
       defined).
 	- Choose a sort order for displaying this payment option to visitors.
       Lowest is displayed first.
-3. Fill out config.php with appropriate information.
-    - See the readme at https://github.com/sidhujag/bitsharescheckout for a description of config.php
+3. Fill out config.php with appropriate information and configure Bitshares Checkout
+    - See the readme at https://github.com/sidhujag/bitsharescheckout
 4. To configure Bitshares to show up as an accepted payment on the homepage
 	- Under Modules > Boxes > Card Acceptance click Edit on right pane and drag the Bitshares image from "New Cards" to anywhere in the "Show Cards" list. 
 # Usage

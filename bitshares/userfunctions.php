@@ -31,8 +31,8 @@ function isOrderCompleteUser($memo, $order_id)
 {
 	global $accountName;
 	global $hashSalt;
-	$sql = "select o.orders_id,  o.currency, ot.value as order_total from " . TABLE_ORDERS . " o left join " . TABLE_ORDERS_TOTAL . " ot on (o.orders_id = ot.orders_id) where ot.class = 'ot_total' and o.orders_status = '" . MODULE_PAYMENT_BITSHARES_PAID_STATUS_ID ."'";
-	//$sql = "select orders_id, currency, order_total from " .TABLE_ORDERS. " where orders_status = '" . MODULE_PAYMENT_BITSHARES_PAID_STATUS_ID ."' and orders_id = '".$order_id."'";
+	$sql = "select o.orders_id,  o.currency, ot.value as order_total from " . TABLE_ORDERS . " o left join " . TABLE_ORDERS_TOTAL . " ot on (o.orders_id = ot.orders_id) where ot.class = 'ot_total' and o.orders_status = '" . MODULE_PAYMENT_BITSHARES_PAID_STATUS_ID ."' and o.orders_id = '".$order_id."'";
+	
 	$result = tep_db_query($sql);
 	while ($orders_status = tep_db_fetch_array($result)) {
 			$total = $orders_status['order_total'];
@@ -54,7 +54,7 @@ function doesOrderExistUser($memo, $order_id)
 	global $accountName;
 	global $hashSalt;
 	$sql = "select o.orders_id,  o.currency, ot.value as order_total from " . TABLE_ORDERS . " o left join " . TABLE_ORDERS_TOTAL . " ot on (o.orders_id = ot.orders_id) where ot.class = 'ot_total' and o.orders_status = '" . MODULE_PAYMENT_BITSHARES_UNPAID_STATUS_ID ."' and o.orders_id = '".$order_id."'";
-	//$sql = "select orders_id, currency, order_total from ". TABLE_ORDERS. " where orders_status = '" . MODULE_PAYMENT_BITSHARES_UNPAID_STATUS_ID ."' and orders_id = '".$order_id."'";
+	
 	$result = tep_db_query($sql);
 
 	while ($orders_status = tep_db_fetch_array($result)) {

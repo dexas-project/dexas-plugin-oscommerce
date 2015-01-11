@@ -81,26 +81,36 @@ function doesOrderExistUser($memo, $order_id)
 function completeOrderUser($order)
 {
 	global $baseURL;
-  $ret = array();
+	$response = array();
 	$transid = $order['trx_id'];			
-	tep_db_query("update " . TABLE_ORDERS . " set orders_status = '" . MODULE_PAYMENT_BITSHARES_PAID_STATUS_ID . "', last_modified = now() where orders_id = '" . $order['order_id'] . "'");
+	$res = tep_db_query("update " . TABLE_ORDERS . " set orders_status = '" . MODULE_PAYMENT_BITSHARES_PAID_STATUS_ID . "', last_modified = now() where orders_id = '" . $order['order_id'] . "'");
+	if(!$res)
+	{
+		$response['error'] = 'Could not update order status to complete';
+		return $response;
+	} 	
 	$sql_data_array = array('orders_id' => $order['order_id'],
                         'orders_status_id' => MODULE_PAYMENT_BITSHARES_PAID_STATUS_ID,
                         'date_added' => 'now()',
                         'customer_notified' => '0',
                         'comments' => 'Order Processed! [Transaction ID: ' . $transid . ']');
 	tep_db_perform(TABLE_ORDERS_STATUS_HISTORY, $sql_data_array);
-	$ret['url'] = $baseURL.'index.php?main_page=checkout_success';
-	return $ret;
+	$response['url'] = $baseURL.'index.php?main_page=checkout_success';
+	return $response;
 }
 function cancelOrderUser($order)
 {
 	global $baseURL;
 	$response = array();
-	$response['url'] = $baseURL;
+	
 	
   # update order status to reflect processed status:
-  tep_db_query("update " . TABLE_ORDERS . " set orders_status = '" . MODULE_PAYMENT_BITSHARES_UNPAID_STATUS_ID . "', last_modified = now() where orders_id = '" . $order['order_id'] . "'");
+  $res  = tep_db_query("update " . TABLE_ORDERS . " set orders_status = '" . MODULE_PAYMENT_BITSHARES_UNPAID_STATUS_ID . "', last_modified = now() where orders_id = '" . $order['order_id'] . "'");
+	if(!$res)
+	{
+		$response['error'] = 'Could not update order status to cancelled';
+		return $response;
+	}   
   # update order status history:
   $sql_data_array = array('orders_id' => $order['order_id'],
                             'orders_status_id' => MODULE_PAYMENT_BITSHARES_UNPAID_STATUS_ID,
@@ -115,7 +125,7 @@ function cancelOrderUser($order)
       tep_remove_order($order['order_id'], $restock = true);
   }
         
-
+	$response['url'] = $baseURL;
 	return $response;
 }
 function cronJobUser()

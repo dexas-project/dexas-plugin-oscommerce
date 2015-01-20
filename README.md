@@ -19,6 +19,7 @@ Bitshares/oscommerce-plugin
     - See the readme at https://github.com/sidhujag/bitsharescheckout<br />
 4. To configure Bitshares to show up as an accepted payment on the homepage<br />
 	- Under Modules > Boxes > Card Acceptance click Edit on right pane and drag the Bitshares image from "New Cards" to anywhere in the "Show Cards" list. <br />
+	
 # Usage
 
 When a user chooses the Bitshares method, they will be

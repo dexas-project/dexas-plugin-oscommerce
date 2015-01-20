@@ -3,22 +3,22 @@ Bitshares/oscommerce-plugin
 
 # Installation
 
-1. Copy these files into your osCommerce root directory
-2. Copy Bitshares Checkout(https://github.com/sidhujag/bitsharescheckout) files into your osCommerce root directory, overwrite any existing files.
+1. Copy these files into your osCommerce root directory<br />
+2. Copy Bitshares Checkout(https://github.com/sidhujag/bitsharescheckout) files into your osCommerce root directory, overwrite any existing files.<br />
 
 # Configuration
 
-1. In your osCommerce admin panel under Modules > Payment, install the Bitshares module
-2. Fill out all of the configuration information:
-	- Verify that the module is enabled.
+1. In your osCommerce admin panel under Modules > Payment, install the Bitshares module<br />
+2. Fill out all of the configuration information:<br />
+	- Verify that the module is enabled.<br />
 	- Choose a status for unpaid and paid orders (or leave the default values as
-      defined).
+      defined).<br />
 	- Choose a sort order for displaying this payment option to visitors.
-      Lowest is displayed first.
-3. Fill out config.php with appropriate information and configure Bitshares Checkout
-    - See the readme at https://github.com/sidhujag/bitsharescheckout
-4. To configure Bitshares to show up as an accepted payment on the homepage
-	- Under Modules > Boxes > Card Acceptance click Edit on right pane and drag the Bitshares image from "New Cards" to anywhere in the "Show Cards" list. 
+      Lowest is displayed first.<br />
+3. Fill out config.php with appropriate information and configure Bitshares Checkout<br />
+    - See the readme at https://github.com/sidhujag/bitsharescheckout<br />
+4. To configure Bitshares to show up as an accepted payment on the homepage<br />
+	- Under Modules > Boxes > Card Acceptance click Edit on right pane and drag the Bitshares image from "New Cards" to anywhere in the "Show Cards" list. <br />
 # Usage
 
 When a user chooses the Bitshares method, they will be
@@ -53,7 +53,7 @@ To contribute to this project, please fork and submit a pull request.
 
 The MIT License (MIT)
 
-Copyright (c) 2011-2014 Bitshares
+Copyright (c) 2011-2015 Bitshares
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

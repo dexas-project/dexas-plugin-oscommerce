@@ -1,11 +1,11 @@
 <?php
 define('ROOT', __DIR__ .DIRECTORY_SEPARATOR);
-$baseURL = 'http://www.bitsharesdemo.com/oscom/';
-$accountName = 'opencartdemo';
-$rpcUser = 'user';
-$rpcPass = 'pass';
-$rpcPort = 1234;
-$demoMode = TRUE;
-$hashSalt = 'oscommercedemo'; // see README
-$cronToken = 'sdf33dddd'; // see README
+define('baseURL', 'http://www.bitsharesdemo.com/oscom/');
+define('accountName', 'opencartdemo');
+define('rpcUser', 'user');
+define('rpcPass', 'pass');
+define('rpcPort', '1234');
+define('demoMode ', TRUE);
+define('hashSalt', 'oscommercedemo');
+define('cronToken', 'sdf33dddd');
 ?>

@@ -29,8 +29,6 @@ function getOpenOrdersUser()
 }
 function isOrderCompleteUser($memo, $order_id)
 {
-	global $accountName;
-	global $hashSalt;
 	$sql = "select o.orders_id,  o.currency, ot.value as order_total from " . TABLE_ORDERS . " o left join " . TABLE_ORDERS_TOTAL . " ot on (o.orders_id = ot.orders_id) where ot.class = 'ot_total' and o.orders_status = '" . MODULE_PAYMENT_BITSHARES_PAID_STATUS_ID ."' and o.orders_id = '".$order_id."'";
 	
 	$result = tep_db_query($sql);
@@ -38,7 +36,7 @@ function isOrderCompleteUser($memo, $order_id)
 			$total = $orders_status['order_total'];
 			$total = number_format((float)$total,2);
 			$asset = btsCurrencyToAsset($orders_status['currency']);
-			$hash =  btsCreateEHASH($accountName,$order_id, $total, $asset, $hashSalt);
+			$hash =  btsCreateEHASH(accountName,$order_id, $total, $asset, hashSalt);
 			$memoSanity = btsCreateMemo($hash);		
 			if($memoSanity === $memo)
 			{	
@@ -51,8 +49,7 @@ function isOrderCompleteUser($memo, $order_id)
 }
 function doesOrderExistUser($memo, $order_id)
 {
-	global $accountName;
-	global $hashSalt;
+
 	$sql = "select o.orders_id,  o.currency, ot.value as order_total from " . TABLE_ORDERS . " o left join " . TABLE_ORDERS_TOTAL . " ot on (o.orders_id = ot.orders_id) where ot.class = 'ot_total' and o.orders_status = '" . MODULE_PAYMENT_BITSHARES_UNPAID_STATUS_ID ."' and o.orders_id = '".$order_id."'";
 	
 	$result = tep_db_query($sql);
@@ -61,7 +58,7 @@ function doesOrderExistUser($memo, $order_id)
 			$total = $orders_status['order_total'];
 			$total = number_format((float)$total,2);
 			$asset = btsCurrencyToAsset($orders_status['currency']);
-			$hash =  btsCreateEHASH($accountName,$order_id, $total, $asset, $hashSalt);
+			$hash =  btsCreateEHASH(accountName,$order_id, $total, $asset, hashSalt);
 			$memoSanity = btsCreateMemo($hash);			
 			if($memoSanity === $memo)
 			{	
@@ -80,7 +77,7 @@ function doesOrderExistUser($memo, $order_id)
 
 function completeOrderUser($order)
 {
-	global $baseURL;
+	
 	$response = array();
 	$transid = $order['trx_id'];			
 	$res = tep_db_query("update " . TABLE_ORDERS . " set orders_status = '" . MODULE_PAYMENT_BITSHARES_PAID_STATUS_ID . "', last_modified = now() where orders_id = '" . $order['order_id'] . "'");
@@ -95,12 +92,12 @@ function completeOrderUser($order)
                         'customer_notified' => '0',
                         'comments' => 'Order Processed! [Transaction ID: ' . $transid . ']');
 	tep_db_perform(TABLE_ORDERS_STATUS_HISTORY, $sql_data_array);
-	$response['url'] = $baseURL.'index.php?main_page=checkout_success';
+	$response['url'] = baseURL.'index.php?main_page=checkout_success';
 	return $response;
 }
 function cancelOrderUser($order)
 {
-	global $baseURL;
+	
 	$response = array();
 	
 	
@@ -125,7 +122,7 @@ function cancelOrderUser($order)
       tep_remove_order($order['order_id'], $restock = true);
   }
         
-	$response['url'] = $baseURL;
+	$response['url'] = baseURL;
 	return $response;
 }
 function cronJobUser()
@@ -135,16 +132,14 @@ function cronJobUser()
 function createOrderUser()
 {
 
-	global $accountName;
-	global $hashSalt;
 	$order_id    = $_REQUEST['order_id'];
 	$asset = btsCurrencyToAsset($_REQUEST['code']);
 	$total = number_format((float)$_REQUEST['total'],2);
 	
-	$hash =  btsCreateEHASH($accountName,$order_id, $total, $asset, $hashSalt);
+	$hash =  btsCreateEHASH(accountName,$order_id, $total, $asset, hashSalt);
 	$memo = btsCreateMemo($hash);
 	$ret = array(
-		'accountName'     => $accountName,
+		'accountName'     => accountName,
 		'order_id'     => $order_id,
 		'memo'     => $memo
 	);	

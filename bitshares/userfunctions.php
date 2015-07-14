@@ -10,7 +10,7 @@ function getOpenOrdersUser()
 {
 	global $languages_id;
 	$openOrderList = array();
-	$sql = "select o.orders_id,  o.currency, ot.value as order_total from " . TABLE_ORDERS . " o left join " . TABLE_ORDERS_TOTAL . " ot on (o.orders_id = ot.orders_id) where ot.class = 'ot_total' and o.orders_status = '" . MODULE_PAYMENT_BITSHARES_UNPAID_STATUS_ID ."'";
+	$sql = "select o.orders_id,  o.currency, ot.value, o.date_added as order_total from " . TABLE_ORDERS . " o left join " . TABLE_ORDERS_TOTAL . " ot on (o.orders_id = ot.orders_id) where ot.class = 'ot_total' and o.orders_status = '" . MODULE_PAYMENT_BITSHARES_UNPAID_STATUS_ID ."'";
 	//$sql = "select orders_id, currency, order_total from ". TABLE_ORDERS." where orders_status = '" . MODULE_PAYMENT_BITSHARES_UNPAID_STATUS_ID ."'";
 	$result = tep_db_query($sql);
 
@@ -19,9 +19,9 @@ function getOpenOrdersUser()
 		$total = $orders_status['order_total'];
 		$total = number_format((float)$total,2);		
 		$newOrder['total'] = $total;
-		$newOrder['currency_code'] = $orders_status['currency'];
+		$newOrder['asset'] = $orders_status['currency'];
 		$newOrder['order_id'] = $orders_status['orders_id'];
-		$newOrder['date_added'] = 0;
+		$newOrder['date_added'] = $orders_status['date_added'];
 		array_push($openOrderList,$newOrder);    
 	}
 	
@@ -50,7 +50,7 @@ function isOrderCompleteUser($memo, $order_id)
 function doesOrderExistUser($memo, $order_id)
 {
 
-	$sql = "select o.orders_id,  o.currency, ot.value as order_total from " . TABLE_ORDERS . " o left join " . TABLE_ORDERS_TOTAL . " ot on (o.orders_id = ot.orders_id) where ot.class = 'ot_total' and o.orders_status = '" . MODULE_PAYMENT_BITSHARES_UNPAID_STATUS_ID ."' and o.orders_id = '".$order_id."'";
+	$sql = "select o.orders_id,  o.currency, ot.value, o.date_added as order_total from " . TABLE_ORDERS . " o left join " . TABLE_ORDERS_TOTAL . " ot on (o.orders_id = ot.orders_id) where ot.class = 'ot_total' and o.orders_status = '" . MODULE_PAYMENT_BITSHARES_UNPAID_STATUS_ID ."' and o.orders_id = '".$order_id."'";
 	
 	$result = tep_db_query($sql);
 
@@ -67,7 +67,7 @@ function doesOrderExistUser($memo, $order_id)
 				$order['total'] = $total;
 				$order['asset'] = $asset;
 				$order['memo'] = $memo;	
-				
+				$order['date_added'] = $orders_status['date_added'];
 				return $order;
 			}
 		
